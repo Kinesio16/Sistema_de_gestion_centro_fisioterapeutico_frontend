@@ -25,6 +25,7 @@ function VentaForm({
     sucursales,
 
 }) {
+    
 
     return (
 
@@ -37,16 +38,19 @@ function VentaForm({
                 <Autocomplete
 
                     options={pacientes}
-
                     value={
                         pacientes.find(
                             p => p.id === formData.pacienteId
                         ) || null
                     }
-
                     getOptionLabel={(option) =>
-                        `${option.nombres} ${option.apellidos}`
+                        option ? `${option.nombres} ${option.apellidos}` : ""
                     }
+                    renderOption={(props, option) => (
+                        <li {...props} key={option.id}>
+                            {option.nombres} {option.apellidos}
+                        </li>
+                    )}
 
                     isOptionEqualToValue={(option, value) =>
                         option.id === value.id
@@ -98,28 +102,19 @@ function VentaForm({
                         ) || null
                     }
 
-                    getOptionLabel={(option) =>
-                        option.nombre
-                    }
+                    getOptionLabel={(option) => option?.nombre ?? ""}
 
                     isOptionEqualToValue={(option, value) =>
                         option.id === value.id
                     }
 
                     onChange={(event, value) =>
-
                         onChange({
-
                             target: {
-
                                 name: "servicio",
-
                                 value
-
                             }
-
                         })
-
                     }
 
                     renderInput={(params) => (
@@ -153,8 +148,13 @@ function VentaForm({
                     }
 
                     getOptionLabel={(option) =>
-                        `${option.nombres} ${option.apellidos}`
+                        option ? `${option.nombres} ${option.apellidos}` : ""
                     }
+                    renderOption={(props, option) => (
+                        <li {...props} key={option.id}>
+                            {option.nombres} {option.apellidos}
+                        </li>
+                    )}
 
                     isOptionEqualToValue={(option, value) =>
                         option.id === value.id
