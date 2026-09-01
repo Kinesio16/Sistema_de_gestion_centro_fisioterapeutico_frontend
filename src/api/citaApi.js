@@ -29,7 +29,7 @@ export async function createCita(data) {
 
 export async function updateCita(id, data) {
 
-    console.log("Actualizando cita:", data);
+    
 
     try {
 

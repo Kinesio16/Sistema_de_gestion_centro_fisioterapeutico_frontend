@@ -237,6 +237,33 @@ function Tratamientos() {
             nuevosErrores.fechaInicio =
                 "Seleccione la fecha de inicio.";
 
+                if (formData.fechaInicio) {
+
+                    const hoy = new Date();
+                    hoy.setHours(0, 0, 0, 0);
+
+                    const limite = new Date();
+                    limite.setDate(limite.getDate() - 15);
+                    limite.setHours(0, 0, 0, 0);
+
+                    const fechaInicio = new Date(formData.fechaInicio);
+
+                    if (fechaInicio < limite) {
+
+                        nuevosErrores.fechaInicio =
+                            "Solo se permiten tratamientos con una antigüedad máxima de 15 días.";
+
+                    }
+
+                    if (fechaInicio > hoy) {
+
+                        nuevosErrores.fechaInicio =
+                            "La fecha de inicio no puede ser posterior a la fecha actual.";
+
+                    }
+
+                }
+
         if (!formData.objetivoGeneral)
 
             nuevosErrores.objetivoGeneral =

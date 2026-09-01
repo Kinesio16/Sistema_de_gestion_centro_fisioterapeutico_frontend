@@ -108,22 +108,22 @@ function Servicios() {
 
         const { name, value } = e.target;
 
-        setFormData((prev) => ({
-
+        setFormData(prev => ({
             ...prev,
-
-            [name]: value,
-
+            [name]:
+                [
+                    "cantidadSesiones",
+                    "precioCosto",
+                    "precioVenta"
+                ].includes(name)
+                    ? value
+                    : value
         }));
 
-        setErrores((prev) => ({
-
+        setErrores(prev => ({
             ...prev,
-
             [name]: undefined,
-
         }));
-
     };
 
     const abrirNuevoServicio = () => {
@@ -156,7 +156,6 @@ function Servicios() {
         if (
             !formData.nombre ||
             !formData.cantidadSesiones ||
-            !formData.precioCosto ||
             !formData.precioVenta
         ) {
 
@@ -168,6 +167,13 @@ function Servicios() {
             return;
 
         }
+        const datos = {
+            ...formData,
+            precioCosto:
+                formData.precioCosto === ""
+                    ? null
+                    : Number(formData.precioCosto),
+        };
 
         try {
 
@@ -175,7 +181,7 @@ function Servicios() {
 
                 await actualizarServicio(
                     servicioEditando.id,
-                    formData
+                    datos
                 );
 
                 mostrarSnackbar(
@@ -185,7 +191,7 @@ function Servicios() {
 
             } else {
 
-                await crearServicio(formData);
+                await crearServicio(datos);
 
                 mostrarSnackbar(
                     "Servicio registrado correctamente.",
@@ -276,7 +282,7 @@ function Servicios() {
                     servicio.cantidadSesiones,
 
                 precioCosto:
-                    servicio.precioCosto,
+                    servicio.precioCosto ?? "",
 
                 precioVenta:
                     servicio.precioVenta,
