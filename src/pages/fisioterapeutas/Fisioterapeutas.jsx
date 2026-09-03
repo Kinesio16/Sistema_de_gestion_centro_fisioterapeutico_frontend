@@ -55,6 +55,8 @@ function Fisioterapeutas() {
 
     const [errores, setErrores] = useState({});
 
+    const [guardando, setGuardando] = useState(false);
+
     const [busqueda, setBusqueda] = useState("");
 
     const [page, setPage] = useState(0);
@@ -174,6 +176,9 @@ function Fisioterapeutas() {
 
     const guardarFisioterapeuta = async () => {
 
+
+        if (guardando) return;
+
         if (
             !formData.nombres ||
             !formData.apellidos ||
@@ -192,6 +197,8 @@ function Fisioterapeutas() {
             return;
 
         }
+
+        setGuardando(true);
 
         try {
 
@@ -252,6 +259,10 @@ function Fisioterapeutas() {
                 "error"
 
             );
+
+        }finally {
+
+            setGuardando(false);
 
         }
 
@@ -574,6 +585,7 @@ function Fisioterapeutas() {
                 }
                 modoEdicion={modoEdicion}
                 onSave={guardarFisioterapeuta}
+                guardando={guardando}
             >
 
                 <FisioterapeutaForm

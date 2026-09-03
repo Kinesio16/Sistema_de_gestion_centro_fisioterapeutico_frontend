@@ -5,6 +5,7 @@ import {
     DialogActions,
     Button,
 } from "@mui/material";
+import SubmitButton from "../../../components/common/SubmitButton";
 
 function VentaDialog({
 
@@ -18,6 +19,8 @@ function VentaDialog({
 
     children,
 
+    guardando,
+
 }) {
 
     return (
@@ -26,7 +29,7 @@ function VentaDialog({
 
             open={open}
 
-            onClose={onClose}
+            onClose={guardando ? undefined : onClose}
 
             fullWidth
 
@@ -50,20 +53,17 @@ function VentaDialog({
 
                 <Button
                     onClick={onClose}
+                    disabled={guardando}
                 >
                     Cancelar
                 </Button>
 
-                <Button
-
-                    variant="contained"
-
+                <SubmitButton
+                    loading={guardando}
                     onClick={onSave}
-
                 >
                     Guardar
-
-                </Button>
+                </SubmitButton>
 
             </DialogActions>
 

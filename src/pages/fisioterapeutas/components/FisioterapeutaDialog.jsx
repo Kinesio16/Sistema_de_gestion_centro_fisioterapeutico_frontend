@@ -5,6 +5,7 @@ import {
     DialogTitle,
     Button,
 } from "@mui/material";
+import SubmitButton from "../../../components/common/SubmitButton";
 
 function FisioterapeutaDialog({
 
@@ -14,6 +15,7 @@ function FisioterapeutaDialog({
     children,
     onSave,
     modoEdicion,
+    guardando,
 
 }) {
 
@@ -21,7 +23,7 @@ function FisioterapeutaDialog({
 
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={guardando ? undefined : onClose}
             fullWidth
             maxWidth="md"
         >
@@ -45,29 +47,27 @@ function FisioterapeutaDialog({
 
             <DialogActions sx={{ p: 2 }}>
 
-                <Button onClick={onClose}>
+                <Button 
+                    onClick={onClose}
+                    disabled={guardando}
+                >
 
                     Cancelar
 
                 </Button>
 
-                <Button
-                    variant="contained"
+                <SubmitButton
+                    loading={guardando}
                     onClick={onSave}
                     sx={{
                         bgcolor: "#F57C00",
-
                         "&:hover": {
                             bgcolor: "#E65100",
                         },
                     }}
                 >
-
-                    {modoEdicion
-                        ? "Actualizar"
-                        : "Guardar"}
-
-                </Button>
+                    {modoEdicion ? "Actualizar" : "Guardar"}
+                </SubmitButton>
 
             </DialogActions>
 

@@ -57,6 +57,8 @@ function Servicios() {
 
     const [errores, setErrores] = useState({});
 
+    const [guardando, setGuardando] = useState(false);
+
     const initialFormData = {
 
         nombre: "",
@@ -153,6 +155,9 @@ function Servicios() {
     };
         const guardarServicio = async () => {
 
+            if (guardando) return;
+
+
         if (
             !formData.nombre ||
             !formData.cantidadSesiones ||
@@ -167,6 +172,9 @@ function Servicios() {
             return;
 
         }
+
+        setGuardando(true);
+        
         const datos = {
             ...formData,
             precioCosto:
@@ -233,6 +241,8 @@ function Servicios() {
 
             );
 
+        } finally{
+            setGuardando(false);
         }
 
     };
@@ -477,16 +487,17 @@ function Servicios() {
         />
 
         <ServicioDialog
-            open={openDialog}
-            onClose={cerrarDialog}
-            title={
-                modoEdicion
-                    ? "Editar Servicio"
-                    : "Nuevo Servicio"
-            }
-            modoEdicion={modoEdicion}
-            onSave={guardarServicio}
-        >
+                open={openDialog}
+                onClose={cerrarDialog}
+                title={
+                    modoEdicion
+                        ? "Editar Servicio"
+                        : "Nuevo Servicio"
+                }
+                modoEdicion={modoEdicion}
+                onSave={guardarServicio}
+                guardando={guardando}
+            >
 
             <ServicioForm
                 formData={formData}

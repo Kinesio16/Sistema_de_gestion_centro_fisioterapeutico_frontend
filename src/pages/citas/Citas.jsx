@@ -84,6 +84,8 @@ function Citas() {
         setErrores] =
         useState({});
 
+    const [guardando, setGuardando] = useState(false);
+
         const [formData,
         setFormData] =
         useState({
@@ -322,11 +324,16 @@ function Citas() {
 
         const guardarCita = async () => {
 
+
+            if (guardando) return;
+
             if (!validarFormulario()) {
 
                 return;
 
             }
+
+            setGuardando(true);
 
             try {
 
@@ -385,6 +392,10 @@ function Citas() {
                     message: mensaje,
 
                 });
+
+            }finally {
+
+                setGuardando(false);
 
             }
 
@@ -527,6 +538,8 @@ function Citas() {
                     onGuardar={guardarCita}
 
                     editando={modoEdicion}
+
+                    guardando={guardando}
 
                     formData={formData}
 

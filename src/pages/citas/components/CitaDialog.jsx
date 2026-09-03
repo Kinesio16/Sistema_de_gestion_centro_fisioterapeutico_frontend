@@ -6,6 +6,8 @@ import {
     Button,
 } from "@mui/material";
 
+import SubmitButton from "../../../components/common/SubmitButton";
+
 import CitaForm from "./CitaForm";
 
 function CitaDialog({
@@ -17,6 +19,8 @@ function CitaDialog({
     onGuardar,
 
     editando,
+
+    guardando,
 
     formData,
 
@@ -36,7 +40,7 @@ function CitaDialog({
 
             open={open}
 
-            onClose={onClose}
+            onClose={guardando ? undefined : onClose}
 
             fullWidth
 
@@ -81,6 +85,7 @@ function CitaDialog({
                 <Button
 
                     onClick={onClose}
+                    disabled={guardando}
 
                 >
 
@@ -88,25 +93,12 @@ function CitaDialog({
 
                 </Button>
 
-                <Button
-
-                    variant="contained"
-
+                <SubmitButton
+                    loading={guardando}
                     onClick={onGuardar}
-
                 >
-
-                    {
-
-                        editando
-
-                            ? "Actualizar"
-
-                            : "Guardar"
-
-                    }
-
-                </Button>
+                    {editando ? "Actualizar" : "Guardar"}
+                </SubmitButton>
 
             </DialogActions>
 

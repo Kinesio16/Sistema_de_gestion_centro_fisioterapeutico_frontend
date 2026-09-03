@@ -101,6 +101,8 @@ function Sesiones() {
 
     const [errores, setErrores] = useState({});
 
+    const [guardando, setGuardando] = useState(false);
+
     const cargarTratamientos = async () => {
 
         try {
@@ -332,7 +334,11 @@ function Sesiones() {
 
         const guardar = async () => {
 
-        if (!validarFormulario()) return;
+            if (guardando) return;
+
+            if (!validarFormulario()) return;
+
+            setGuardando(true);
 
         try {
 
@@ -398,7 +404,11 @@ function Sesiones() {
 
             });
 
-        }
+        }finally {
+
+                setGuardando(false);
+
+            }
 
     };
 
@@ -626,6 +636,7 @@ function Sesiones() {
                 open={openDialog}
                 onClose={() => setOpenDialog(false)}
                 onGuardar={guardar}
+                guardando={guardando}
                 formData={formData}
                 onChange={handleChange}
                 errores={errores}

@@ -6,6 +6,8 @@ import {
     DialogTitle,
 } from "@mui/material";
 
+import SubmitButton from "../../../components/common/SubmitButton";
+
 import SesionForm from "./SesionForm";
 
 function SesionDialog({
@@ -15,6 +17,8 @@ function SesionDialog({
     onClose,
 
     onGuardar,
+
+    guardando,
 
     formData,
 
@@ -32,7 +36,7 @@ function SesionDialog({
 
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={guardando ? undefined : onClose}
             fullWidth
             maxWidth="lg"
         >
@@ -68,6 +72,7 @@ function SesionDialog({
                 <Button
 
                     onClick={onClose}
+                    disabled={guardando}
 
                 >
 
@@ -75,21 +80,12 @@ function SesionDialog({
 
                 </Button>
 
-                <Button
-
-                    variant="contained"
-
+                <SubmitButton
+                    loading={guardando}
                     onClick={onGuardar}
-
                 >
-
-                    {editando
-
-                        ? "Actualizar"
-
-                        : "Guardar"}
-
-                </Button>
+                    {editando ? "Actualizar" : "Guardar"}
+                </SubmitButton>
 
             </DialogActions>
 

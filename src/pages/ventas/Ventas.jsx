@@ -90,6 +90,8 @@ function Ventas() {
 
         });
 
+        const [guardando, setGuardando] = useState(false);
+
         const [formData,
             setFormData] =
             useState({
@@ -324,11 +326,15 @@ function Ventas() {
 
         const guardarVenta = async () => {
 
+            if (guardando) return;
+
             if (!validarFormulario()) {
 
                 return;
 
             }
+
+            setGuardando(true);
 
             try {
 
@@ -401,6 +407,10 @@ function Ventas() {
                     "error"
 
                 );
+
+            }finally {
+
+                setGuardando(false);
 
             }
 
@@ -618,6 +628,7 @@ function Ventas() {
                     }
 
                     onSave={guardarVenta}
+                    guardando={guardando}
 
                 >
 

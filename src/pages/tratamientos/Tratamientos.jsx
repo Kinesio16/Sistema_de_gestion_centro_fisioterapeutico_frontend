@@ -120,6 +120,8 @@ function Tratamientos() {
 
     const [errores, setErrores] = useState({});
 
+    const [guardando, setGuardando] = useState(false);
+
 
     const cargarCatalogos = async () => {
 
@@ -404,7 +406,11 @@ function Tratamientos() {
 
     const guardar = async () => {
 
+        if (guardando) return;
+
         if (!validarFormulario()) return;
+
+        setGuardando(true);
 
         try {
 
@@ -476,7 +482,11 @@ function Tratamientos() {
 
             });
 
-        }
+        }finally {
+
+            setGuardando(false);
+
+    }
 
     };
 
@@ -665,6 +675,8 @@ function Tratamientos() {
                 onClose={() => setOpenDialog(false)}
 
                 onGuardar={guardar}
+
+                guardando={guardando}
 
                 formData={formData}
 

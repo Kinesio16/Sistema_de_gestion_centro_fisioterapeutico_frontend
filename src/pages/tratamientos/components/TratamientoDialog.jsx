@@ -8,6 +8,8 @@ import {
 
 import TratamientoForm from "./TratamientoForm";
 
+import SubmitButton from "../../../components/common/SubmitButton";
+
 function TratamientoDialog({
 
     open,
@@ -15,6 +17,8 @@ function TratamientoDialog({
     onClose,
 
     onGuardar,
+
+    guardando,
 
     formData,
 
@@ -38,7 +42,7 @@ function TratamientoDialog({
 
             open={open}
 
-            onClose={onClose}
+            onClose={guardando ? undefined : onClose}
 
             maxWidth="lg"
 
@@ -85,6 +89,7 @@ function TratamientoDialog({
                 <Button
 
                     onClick={onClose}
+                    disabled={guardando}
 
                 >
 
@@ -92,25 +97,12 @@ function TratamientoDialog({
 
                 </Button>
 
-                <Button
-
-                    variant="contained"
-
+                <SubmitButton
+                    loading={guardando}
                     onClick={onGuardar}
-
                 >
-
-                    {
-
-                        editando
-
-                            ? "Actualizar"
-
-                            : "Guardar"
-
-                    }
-
-                </Button>
+                    {editando ? "Actualizar" : "Guardar"}
+                </SubmitButton>
 
             </DialogActions>
 

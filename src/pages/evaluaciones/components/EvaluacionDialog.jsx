@@ -5,13 +5,14 @@ import {
     DialogContent,
     DialogTitle,
 } from "@mui/material";
-
+import SubmitButton from "../../../components/common/SubmitButton";
 import EvaluacionForm from "./EvaluacionForm";
 
 function EvaluacionDialog({
     open,
     onClose,
     onGuardar,
+    guardando,
     formData,
     onChange,
     errores,
@@ -20,7 +21,8 @@ function EvaluacionDialog({
     editando,
 }) {
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="lg" scroll="paper"
+        <Dialog open={open}  onClose={guardando ? undefined : onClose}
+         fullWidth maxWidth="lg" scroll="paper"
             slotProps={{
         paper: {
             sx: {
@@ -33,10 +35,17 @@ function EvaluacionDialog({
                     pacientes={pacientes} fisioterapeutas={fisioterapeutas} />
             </DialogContent>
             <DialogActions sx={{ p: 2 }}>
-                <Button onClick={onClose}>Cancelar</Button>
-                <Button variant="contained" onClick={onGuardar}>
-                    {editando ? "Actualizar" : "Guardar"}
+                <Button
+                onClick={onClose}
+                disabled={guardando}
+                >Cancelar
                 </Button>
+                <SubmitButton
+                    loading={guardando}
+                    onClick={onGuardar}
+                >
+                    {editando ? "Actualizar" : "Guardar"}
+                </SubmitButton>
             </DialogActions>
         </Dialog>
     );

@@ -6,6 +6,8 @@ import {
   Button,
 } from "@mui/material";
 
+import SubmitButton from "../../../components/common/SubmitButton";
+
 function PacienteDialog({
   open,
   onClose,
@@ -13,11 +15,12 @@ function PacienteDialog({
   children,
   onSave,
   modoEdicion,
+  guardando,
 }) {
   return (
     <Dialog
           open={open}
-          onClose={onClose}
+          onClose={guardando ? undefined : onClose}
           fullWidth
           maxWidth="md"
           scroll="paper"
@@ -49,24 +52,25 @@ function PacienteDialog({
       </DialogContent>
 
       <DialogActions sx={{ p: 2 }}>
-        <Button onClick={onClose}>
+        <Button 
+          onClick={onClose}
+          disabled={guardando}
+        >
           Cancelar
         </Button>
 
-        <Button
-          variant="contained"
-          onClick={onSave}
-          sx={{
-            bgcolor: "#F57C00",
-
-            "&:hover": {
-              bgcolor: "#E65100",
-            },
-          }}
+        <SubmitButton
+            loading={guardando}
+            onClick={onSave}
+            sx={{
+                bgcolor: "#F57C00",
+                "&:hover": {
+                    bgcolor: "#E65100",
+                },
+            }}
         >
-          {modoEdicion ? "Actualizar" : "Guardar"}
-        
-        </Button>
+            {modoEdicion ? "Actualizar" : "Guardar"}
+        </SubmitButton>
       </DialogActions>
     </Dialog>
   );

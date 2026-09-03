@@ -6,6 +6,8 @@ import {
     Button,
 } from "@mui/material";
 
+import SubmitButton from "../../../components/common/SubmitButton";
+
 function ServicioDialog({
 
     open,
@@ -19,6 +21,8 @@ function ServicioDialog({
     onSave,
 
     modoEdicion,
+
+    guardando,
 
 }) {
 
@@ -53,27 +57,18 @@ function ServicioDialog({
                     Cancelar
                 </Button>
 
-                <Button
-                    variant="contained"
+                <SubmitButton
+                    loading={guardando}
                     onClick={onSave}
                     sx={{
                         bgcolor: "#F57C00",
-
                         "&:hover": {
-
                             bgcolor: "#E65100",
-
                         },
                     }}
                 >
-
-                    {
-                        modoEdicion
-                            ? "Actualizar"
-                            : "Guardar"
-                    }
-
-                </Button>
+                    {modoEdicion ? "Actualizar" : "Guardar"}
+                </SubmitButton>
 
             </DialogActions>
 

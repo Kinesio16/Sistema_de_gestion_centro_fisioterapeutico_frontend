@@ -53,6 +53,8 @@ function Pacientes() {
 
     const [errores, setErrores] = useState({});
 
+    const [guardando, setGuardando] = useState(false);
+
     const cerrarDialog = () => {
 
         setOpenDialog(false);
@@ -96,6 +98,9 @@ function Pacientes() {
 
     const guardarPaciente = async () => {
 
+
+        if (guardando) return;
+
         if (
             !formData.nombres ||
             !formData.apellidos ||
@@ -112,6 +117,8 @@ function Pacientes() {
 
             return;
         }
+
+        setGuardando(true);
 
         try {
 
@@ -169,10 +176,14 @@ function Pacientes() {
                         "error"
                     );
 
+                }finally {
+
+                    setGuardando(false);
+
                 }
 
     };
-;
+
     const verPaciente = async (id) => {
 
     try {
@@ -419,6 +430,7 @@ function Pacientes() {
                 }
                 modoEdicion={modoEdicion}
                 onSave={guardarPaciente}
+                guardando={guardando}
             >
 
                 <PacienteForm

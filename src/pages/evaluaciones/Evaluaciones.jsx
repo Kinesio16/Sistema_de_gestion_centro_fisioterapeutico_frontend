@@ -105,6 +105,8 @@ function Evaluaciones() {
 
     const [errores, setErrores] = useState({});
 
+    const [guardando, setGuardando] = useState(false);
+
     const cargarCatalogos = async () => {
 
         try {
@@ -302,7 +304,11 @@ function Evaluaciones() {
 
      const guardar = async () => {
 
+        if (guardando) return;
+
         if (!validarFormulario()) return;
+
+        setGuardando(true);
 
         try {
 
@@ -367,6 +373,10 @@ function Evaluaciones() {
                     "Ocurrió un error al guardar la evaluación.",
 
             });
+
+        }finally {
+
+            setGuardando(false);
 
         }
 
@@ -512,6 +522,8 @@ function Evaluaciones() {
                     onClose={() => setOpenDialog(false)}
 
                     onGuardar={guardar}
+
+                    guardando={guardando}
 
                     formData={formData}
 
