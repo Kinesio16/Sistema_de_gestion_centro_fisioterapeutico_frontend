@@ -19,6 +19,7 @@ import DashboardCard from "./components/DashboardCard";
 import DashboardSectionCard from "./components/DashboardSectionCard";
 
 import useDashboard from "../../hooks/useDashboard";
+import DashboardSucursalCard from "./components/DashboardSucursalCard";
 
 function Dashboard() {
 
@@ -235,6 +236,38 @@ function Dashboard() {
                 </Grid>
 
             </Grid>
+
+            <Grid
+                container
+                spacing={4}
+                sx={{
+                    mb: 4,
+                }}
+            >
+
+                {
+                    dashboard.ventasPorSucursal?.map((sucursal) => (
+
+                        <Grid
+                            key={sucursal.sucursalId}
+                            size={{
+                                xs: 12,
+                                md: 6,
+                                lg: 4,
+                            }}
+                        >
+
+                            <DashboardSucursalCard
+                                sucursal={sucursal}
+                            />
+
+                        </Grid>
+
+                    ))
+                }
+
+            </Grid>
+
             <Grid
                 container
                 spacing={4}
