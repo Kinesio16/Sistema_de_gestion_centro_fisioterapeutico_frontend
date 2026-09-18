@@ -507,9 +507,7 @@ function TratamientoDetailsDialog({
                     <Grid size={{ xs: 12 }}>
 
                         <Typography color="text.secondary">
-
-                            Observaciones Iniciales
-
+                            Observaciones
                         </Typography>
 
                         <Typography
@@ -517,29 +515,7 @@ function TratamientoDetailsDialog({
                                 whiteSpace: "pre-line",
                             }}
                         >
-
                             {tratamiento.observacionesIniciales || "-"}
-
-                        </Typography>
-
-                    </Grid>
-
-                    <Grid size={{ xs: 12 }}>
-
-                        <Typography color="text.secondary">
-
-                            Observaciones Finales
-
-                        </Typography>
-
-                        <Typography
-                            sx={{
-                                whiteSpace: "pre-line",
-                            }}
-                        >
-
-                            {tratamiento.observacionesFinales || "-"}
-
                         </Typography>
 
                     </Grid>

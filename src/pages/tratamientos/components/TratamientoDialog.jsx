@@ -34,6 +34,10 @@ function TratamientoDialog({
 
     editando,
 
+    editarInformacion,
+
+    setEditarInformacion,
+
 }) {
 
     return (
@@ -79,6 +83,12 @@ function TratamientoDialog({
                     fisioterapeutas={fisioterapeutas}
 
                     evaluaciones={evaluaciones}
+
+                    editando={editando}
+
+                    editarInformacion={editarInformacion}
+
+                    setEditarInformacion={setEditarInformacion}
 
                 />
 

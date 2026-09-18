@@ -26,6 +26,7 @@ import {
 
 import {
     obtenerEvaluaciones,
+    obtenerEvaluacion
 } from "../../services/evaluacionService";
 
 function Tratamientos() {
@@ -63,6 +64,8 @@ function Tratamientos() {
     const [openConfirm, setOpenConfirm] = useState(false);
 
     const [editando, setEditando] = useState(false);
+
+    const [editarInformacion, setEditarInformacion] = useState(false);
 
     const [tratamientoSeleccionado, setTratamientoSeleccionado] = useState(null);
 
@@ -201,17 +204,59 @@ function Tratamientos() {
 
     ]);
 
-            const handleChange = (event) => {
+    const handleChange = async (event) => {
 
         const { name, value } = event.target;
 
-        setFormData((prev) => ({
+        // Todos los campos normales
+        if (name !== "evaluacionId") {
 
-            ...prev,
+            setFormData((prev) => ({
+                ...prev,
+                [name]: value,
+            }));
 
-            [name]: value,
+            return;
+        }
 
-        }));
+        try {
+
+            const evaluacion = await obtenerEvaluacion(value);
+
+            setFormData((prev) => ({
+
+                ...prev,
+
+                evaluacionId: value,
+
+                pacienteId:
+                    evaluacion.pacienteId,
+
+                fisioterapeutaId:
+                    evaluacion.fisioterapeutaId,
+
+                objetivoGeneral:
+                    evaluacion.objetivosTratamiento,
+
+                diagnostico:
+                    evaluacion.diagnosticoFisioterapeutico,
+
+                tratamientoPropuesto:
+                    evaluacion.tratamientoSugerido,
+
+                sesionesPlanificadas:
+                    evaluacion.sesionesRecomendadas,
+
+                frecuenciaSemanal:
+                    evaluacion.frecuenciaSemanal,
+
+            }));
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
 
     };
 
@@ -312,6 +357,8 @@ function Tratamientos() {
 
         setEditando(false);
 
+        setEditarInformacion(false);
+
         setTratamientoSeleccionado(null);
 
         setErrores({});
@@ -335,6 +382,8 @@ function Tratamientos() {
         setTratamientoSeleccionado(tratamiento);
 
         setEditando(true);
+
+        setEditarInformacion(true);
 
         setErrores({});
 
@@ -692,6 +741,10 @@ function Tratamientos() {
 
                 editando={editando}
 
+                editarInformacion={editarInformacion}
+
+                setEditarInformacion={setEditarInformacion}
+                
             />
 
             <TratamientoDetailsDialog

@@ -4,7 +4,12 @@ import {
     Typography,
     Divider,
     Autocomplete,
+    Paper,
+    Stack,
+    Button,
 } from "@mui/material";
+
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
 
 const tecnicasDisponibles = [
 
@@ -54,8 +59,19 @@ function TratamientoForm({
 
     evaluaciones,
 
+    editarInformacion,
+
+    setEditarInformacion,
+
+    editando,
+
 }) {
 
+    const evaluacionSeleccionada =
+    evaluaciones.find(
+        e => e.id === formData.evaluacionId
+    );
+    
     return (
 
         <>
@@ -81,7 +97,9 @@ function TratamientoForm({
                 <Grid size={{ xs: 12, md: 4 }}>
 
                     <Autocomplete
+                        disabled={editando}
                         options={pacientes}
+                        getOptionKey={(option) => option.id}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         getOptionLabel={(option) =>
                             `${option.nombres} ${option.apellidos}`
@@ -115,6 +133,7 @@ function TratamientoForm({
 
                     <Autocomplete
                         options={fisioterapeutas}
+                        getOptionKey={(option) => option.id}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         getOptionLabel={(option) =>
                             `${option.nombres} ${option.apellidos}`
@@ -147,7 +166,9 @@ function TratamientoForm({
                 <Grid size={{ xs: 12, md: 4 }}>
 
                     <Autocomplete
+                        disabled={editando}
                         options={evaluaciones}
+                        getOptionKey={(option) => option.id}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         getOptionLabel={(option) =>
                             option.codigoEvaluacion || ""
@@ -248,113 +269,153 @@ function TratamientoForm({
 
             <Divider sx={{ mb: 3 }} />
 
-            <Grid container spacing={2}>
+            {
+                !editarInformacion && evaluacionSeleccionada ? (
 
-                <Grid size={{ xs: 12 }}>
+                    <Paper
+                        elevation={1}
+                        sx={{
+                            p: 3,
+                            borderRadius: 3,
+                        }}
+                    >
 
-                    <TextField
+                        <Stack
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            mb={2}
+                        >
 
-                        fullWidth
+                            <Typography
+                                variant="h6"
+                                fontWeight={600}
+                            >
+                                Información importada de la evaluación
+                            </Typography>
 
-                        multiline
+                            <Button
+                                variant="outlined"
+                                startIcon={<EditRoundedIcon />}
+                                onClick={() =>
+                                    setEditarInformacion(true)
+                                }
+                            >
+                                Editar información
+                            </Button>
 
-                        rows={3}
+                        </Stack>
 
-                        label="Objetivo General"
+                        <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                        >
+                            Objetivo General
+                        </Typography>
 
-                        name="objetivoGeneral"
+                        <Typography mb={2}>
+                            {formData.objetivoGeneral || "-"}
+                        </Typography>
 
-                        value={formData.objetivoGeneral ?? ""}
+                        <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                        >
+                            Objetivos Específicos
+                        </Typography>
 
-                        onChange={onChange}
+                        <Typography mb={2}>
+                            {formData.objetivosEspecificos || "-"}
+                        </Typography>
 
-                        error={!!errores.objetivoGeneral}
+                        <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                        >
+                            Diagnóstico
+                        </Typography>
 
-                        helperText={errores.objetivoGeneral}
+                        <Typography mb={2}>
+                            {formData.diagnostico || "-"}
+                        </Typography>
 
-                    />
+                        <Typography
+                            variant="subtitle2"
+                            color="text.secondary"
+                        >
+                            Tratamiento Propuesto
+                        </Typography>
 
-                </Grid>
+                        <Typography>
+                            {formData.tratamientoPropuesto || "-"}
+                        </Typography>
 
-                <Grid size={{ xs: 12 }}>
+                    </Paper>
 
-                    <TextField
+                ) : (
 
-                        fullWidth
+                    <Grid container spacing={2}>
 
-                        multiline
+                        <Grid size={{ xs: 12 }}>
+                            <TextField
+                                fullWidth
+                                multiline
+                                rows={3}
+                                label="Objetivo General"
+                                name="objetivoGeneral"
+                                value={formData.objetivoGeneral ?? ""}
+                                onChange={onChange}
+                                error={!!errores.objetivoGeneral}
+                                helperText={errores.objetivoGeneral}
+                            />
+                        </Grid>
 
-                        rows={4}
+                        <Grid size={{ xs: 12 }}>
+                            <TextField
+                                fullWidth
+                                multiline
+                                rows={4}
+                                label="Objetivos Específicos"
+                                name="objetivosEspecificos"
+                                value={formData.objetivosEspecificos ?? ""}
+                                onChange={onChange}
+                                error={!!errores.objetivosEspecificos}
+                                helperText={errores.objetivosEspecificos}
+                            />
+                        </Grid>
 
-                        label="Objetivos Específicos"
+                        <Grid size={{ xs: 12 }}>
+                            <TextField
+                                fullWidth
+                                multiline
+                                rows={4}
+                                label="Diagnóstico Fisioterapéutico"
+                                name="diagnostico"
+                                value={formData.diagnostico ?? ""}
+                                onChange={onChange}
+                                error={!!errores.diagnostico}
+                                helperText={errores.diagnostico}
+                            />
+                        </Grid>
 
-                        name="objetivosEspecificos"
+                        <Grid size={{ xs: 12 }}>
+                            <TextField
+                                fullWidth
+                                multiline
+                                rows={5}
+                                label="Tratamiento Propuesto"
+                                name="tratamientoPropuesto"
+                                value={formData.tratamientoPropuesto ?? ""}
+                                onChange={onChange}
+                                error={!!errores.tratamientoPropuesto}
+                                helperText={errores.tratamientoPropuesto}
+                            />
+                        </Grid>
 
-                        value={formData.objetivosEspecificos ?? ""}
+                    </Grid>
 
-                        onChange={onChange}
-
-                        error={!!errores.objetivosEspecificos}
-
-                        helperText={errores.objetivosEspecificos}
-
-                    />
-
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-
-                    <TextField
-
-                        fullWidth
-
-                        multiline
-
-                        rows={4}
-
-                        label="Diagnóstico Fisioterapéutico"
-
-                        name="diagnostico"
-
-                        value={formData.diagnostico ?? ""}
-
-                        onChange={onChange}
-
-                        error={!!errores.diagnostico}
-
-                        helperText={errores.diagnostico}
-
-                    />
-
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-
-                    <TextField
-
-                        fullWidth
-
-                        multiline
-
-                        rows={5}
-
-                        label="Tratamiento Propuesto"
-
-                        name="tratamientoPropuesto"
-
-                        value={formData.tratamientoPropuesto ?? ""}
-
-                        onChange={onChange}
-
-                        error={!!errores.tratamientoPropuesto}
-
-                        helperText={errores.tratamientoPropuesto}
-
-                    />
-
-                </Grid>
-
-            </Grid>
+                )
+            }
 
             <Divider sx={{ my: 4 }} />
 
@@ -519,7 +580,7 @@ function TratamientoForm({
 
                         rows={4}
 
-                        label="Observaciones Iniciales"
+                        label="Observaciones"
 
                         name="observacionesIniciales"
 
@@ -530,28 +591,6 @@ function TratamientoForm({
                         error={!!errores.observacionesIniciales}
 
                         helperText={errores.observacionesIniciales}
-
-                    />
-
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-
-                    <TextField
-
-                        fullWidth
-
-                        multiline
-
-                        rows={4}
-
-                        label="Observaciones Finales"
-
-                        name="observacionesFinales"
-
-                        value={formData.observacionesFinales ?? ""}
-
-                        onChange={onChange}
 
                     />
 
