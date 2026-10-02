@@ -19,6 +19,7 @@ import {
 
 import PacienteDetailsDialog from "./components/PacienteDetailsDialog";
 import SearchToolbar from "../../components/common/SearchToolbar";
+import WorkflowDialog from "../../modules/workflow/WorkflowDialog";
 
 function Pacientes() {
 
@@ -28,9 +29,11 @@ function Pacientes() {
 
     const [openDialog, setOpenDialog] = useState(false);
 
+    const [openWorkflow, setOpenWorkflow] = useState(false);
+
     const abrirNuevoPaciente = () => {
 
-    setOpenDialog(true);
+    setOpenWorkflow(true);
 
     };
 
@@ -440,6 +443,16 @@ function Pacientes() {
                 />
 
             </PacienteDialog>
+
+            <WorkflowDialog
+
+                open={openWorkflow}
+
+                onClose={() => setOpenWorkflow(false)}
+
+                onWorkflowChange={cargarPacientes}
+
+            />
 
             <CustomSnackbar
                     open={snackbar.open}

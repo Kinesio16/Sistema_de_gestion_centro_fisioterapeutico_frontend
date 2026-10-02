@@ -437,7 +437,7 @@ function TratamientoForm({
 
                 options={tecnicasDisponibles}
 
-                value={formData.tecnicas}
+                value={formData.tecnicas ?? []}
 
                 onChange={(event, value) =>
 

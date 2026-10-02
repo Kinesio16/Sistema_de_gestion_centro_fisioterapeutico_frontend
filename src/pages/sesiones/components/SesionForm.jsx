@@ -17,6 +17,8 @@ function SesionForm({
 
     tratamientos,
 
+    bloquearTratamiento,
+
 }) {
 
     const tecnicas = [
@@ -89,6 +91,7 @@ function SesionForm({
 
                             <Autocomplete
 
+                                disabled={bloquearTratamiento}
                                 options={tratamientos}
 
                                 value={
